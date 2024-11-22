@@ -83,5 +83,3 @@ Für Fragen oder Unterstützung:
 🎥 **Video-Tutorial:** [YouTube ansehen](https://www.youtube.com/watch?v=_KRrfq_h9rk)
 
 ---
-✨ *Automatisiere deine Nextcloud-Installation mühelos und effizient!*
-```
