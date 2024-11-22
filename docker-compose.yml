@@ -1,0 +1,76 @@
+version: "3.8"
+
+services:
+  nextcloud:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nextcloud
+    ports:
+      - "80:80" # Standard HTTP-Port
+      - "443:443" # Optional: HTTPS-Port (mit Reverse Proxy)
+    environment:
+      - MYSQL_HOST=db
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud_user
+      - MYSQL_PASSWORD=securepassword
+      - REDIS_HOST=redis
+    volumes:
+      - nextcloud_data:/var/www/html
+    depends_on:
+      - db
+      - redis
+    networks:
+      - nextcloud_network
+
+  db:
+    image: mariadb:latest
+    container_name: nextcloud_db
+    environment:
+      - MYSQL_ROOT_PASSWORD=supersecurepassword
+      - MYSQL_DATABASE=nextcloud
+      - MYSQL_USER=nextcloud_user
+      - MYSQL_PASSWORD=securepassword
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - nextcloud_network
+
+  redis:
+    image: redis:latest
+    container_name: nextcloud_redis
+    networks:
+      - nextcloud_network
+    command: redis-server --requirepass redispassword
+
+  # Optional: Reverse Proxy für SSL
+  proxy:
+    image: traefik:v2.9
+    container_name: traefik
+    command:
+      - "--api=true"
+      - "--providers.docker=true"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge=true"
+      - "--certificatesresolvers.myresolver.acme.httpchallenge.entrypoint=web"
+      - "--certificatesresolvers.myresolver.acme.email=your_email@example.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080" # Traefik Dashboard
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - traefik_data:/letsencrypt
+    networks:
+      - nextcloud_network
+
+volumes:
+  nextcloud_data:
+  db_data:
+  traefik_data:
+
+networks:
+  nextcloud_network:
+    driver: bridge
