@@ -48,6 +48,42 @@ Falls du SSL während der initialen Einrichtung nicht installierst, kannst du da
 
 ---
 
+### **Option 2: Nutzung von Docker**
+
+#### 📂 **Dateien vorbereiten**
+1. **Erstelle die notwendigen Dateien:**
+   - `Dockerfile`: Container-Image für Nextcloud.
+   - `docker-compose.yml`: Docker Compose Konfiguration für Nextcloud, MariaDB, Redis und optional einen Reverse Proxy.
+   - `php.ini`: Konfiguration für PHP (z. B. Upload-Limits und Opcache).
+
+2. **Inhalt der Dateien:**
+   - Kopiere die Inhalte für die Dateien aus den entsprechenden Abschnitten unten.
+
+---
+
+#### ⚙️ **Anleitung**
+1. **Projektstruktur erstellen:**
+   ```bash
+   mkdir nextcloud-docker && cd nextcloud-docker
+   touch Dockerfile docker-compose.yml php.ini
+   ```
+
+2. **Dateien einfügen:**
+   Füge den untenstehenden Inhalt in die entsprechenden Dateien ein.
+
+3. **Docker-Container starten:**
+   ```bash
+   docker-compose up -d
+   ```
+
+4. **Nextcloud einrichten:**
+   Öffne `http://<server-ip>` in deinem Browser und folge der Nextcloud-Installationsanleitung.
+
+5. **SSL-Zertifikate hinzufügen (optional):**
+   Wenn du einen Reverse Proxy wie Traefik verwendest, werden SSL-Zertifikate automatisch über Let's Encrypt konfiguriert.
+
+---
+
 ## 🔍 Script Details
 - **Benutzereingaben sammeln:** MariaDB-Zugangsdaten und Subdomain.
 - **Installationsprotokoll erstellen:** Speichert die Installationsdetails, einschließlich des MariaDB-Passworts im Klartext, zur späteren Referenz.
