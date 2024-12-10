@@ -21,7 +21,7 @@ Dieses Skript automatisiert die Installation und Konfiguration von **Nextcloud**
 ## 📖 Usage
 1. **Repository klonen:**
    ```bash
-   git clone https://github.com/ZeroPingLLC/nextcloud.git
+   git clone https://github.com/kristiangasic/nextcloud.git
    ```
 
 2. **In das Skriptverzeichnis wechseln:**
