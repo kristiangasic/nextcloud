@@ -118,4 +118,6 @@ Für Fragen oder Unterstützung:
 
 🎥 **Video-Tutorial:** [YouTube ansehen](https://www.youtube.com/watch?v=_KRrfq_h9rk)
 
+[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kristiangasic)
+
 ---
