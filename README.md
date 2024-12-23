@@ -1,123 +1,122 @@
+```markdown
 # 🚀 Nextcloud Installation Script
 
-Dieses Skript automatisiert die Installation und Konfiguration von **Nextcloud** auf einem **Ubuntu 22.04** Server. Es umfasst die Einrichtung von Apache, MariaDB, PHP 8.1, Redis und Opcache. Zudem bietet es die Möglichkeit, SSL-Zertifikate mit Certbot zu installieren.
+This script automates the installation and configuration of **Nextcloud** on an **Ubuntu 22.04** server. It includes the setup of Apache, MariaDB, PHP 8.1, Redis, and Opcache. Additionally, it offers the option to install SSL certificates using Certbot.
 
 ---
 
 ## 🛠️ Features
-- **Automatische Installation** von Nextcloud und allen notwendigen Abhängigkeiten.
-- **Konfiguration** von MariaDB, PHP 8.1, Redis und Opcache.
-- **SSL-Zertifikatsoption**: Installation während der Einrichtung oder nachträglich.
-- **Erkennung bestehender Installationen**: Option, SSL später hinzuzufügen.
+- **Automatic installation** of Nextcloud and all required dependencies.
+- **Configuration** of MariaDB, PHP 8.1, Redis, and Opcache.
+- **SSL certificate option**: Install during setup or at a later stage.
+- **Detection of existing installations**: Option to add SSL later.
 
 ---
 
-## ⚙️ Voraussetzungen
-- Frische Installation von **Ubuntu 22.04**.
-- Root- oder Sudo-Zugriff auf den Server.
+## ⚙️ Requirements
+- Fresh installation of **Ubuntu 22.04**.
+- Root or sudo access to the server.
 
 ---
 
 ## 📖 Usage
-1. **Repository klonen:**
+1. **Clone the repository:**
    ```bash
    git clone https://github.com/kristiangasic/nextcloud.git
    ```
 
-2. **In das Skriptverzeichnis wechseln:**
+2. **Navigate to the script directory:**
    ```bash
    cd nextcloud
    ```
 
-3. **Das Skript ausführbar machen:**
+3. **Make the script executable:**
    ```bash
    chmod +x install_nextcloud.sh
    ```
 
-4. **Das Skript ausführen:**
+4. **Run the script:**
    ```bash
    sudo ./install_nextcloud.sh
    ```
 
-5. **Anweisungen folgen:**
-   - MariaDB-Benutzernamen und Passwort eingeben.
-   - Subdomain für deine Nextcloud-Instanz eingeben.
+5. **Follow the instructions:**
+   - Enter the MariaDB username and password.
+   - Provide the subdomain for your Nextcloud instance.
 
-### Optional: SSL-Installation
-Falls du SSL während der initialen Einrichtung nicht installierst, kannst du das Skript später erneut ausführen, um SSL hinzuzufügen.
-
----
-
-### **Option 2: Nutzung von Docker**
-
-#### 📂 **Dateien vorbereiten**
-1. **Erstelle die notwendigen Dateien:**
-   - `Dockerfile`: Container-Image für Nextcloud.
-   - `docker-compose.yml`: Docker Compose Konfiguration für Nextcloud, MariaDB, Redis und optional einen Reverse Proxy.
-   - `php.ini`: Konfiguration für PHP (z. B. Upload-Limits und Opcache).
-
-2. **Inhalt der Dateien:**
-   - Kopiere die Inhalte für die Dateien aus den entsprechenden Abschnitten unten.
+### Optional: SSL Installation
+If you don't install SSL during the initial setup, you can rerun the script later to add SSL.
 
 ---
 
-#### ⚙️ **Anleitung**
-1. **Projektstruktur erstellen:**
+### **Option 2: Using Docker**
+
+#### 📂 **Prepare the files**
+1. **Create the necessary files:**
+   - `Dockerfile`: Container image for Nextcloud.
+   - `docker-compose.yml`: Docker Compose configuration for Nextcloud, MariaDB, Redis, and optionally a reverse proxy.
+   - `php.ini`: Configuration for PHP (e.g., upload limits and Opcache).
+
+2. **File contents:**
+   - Copy the file contents from the relevant sections below.
+
+---
+
+#### ⚙️ **Instructions**
+1. **Create the project structure:**
    ```bash
    mkdir nextcloud-docker && cd nextcloud-docker
    touch Dockerfile docker-compose.yml php.ini
    ```
 
-2. **Dateien einfügen:**
-   Füge den untenstehenden Inhalt in die entsprechenden Dateien ein.
+2. **Add file content:**
+   Insert the provided content into the respective files.
 
-3. **Docker-Container starten:**
+3. **Start Docker containers:**
    ```bash
    docker-compose up -d
    ```
 
-4. **Nextcloud einrichten:**
-   Öffne `http://<server-ip>` in deinem Browser und folge der Nextcloud-Installationsanleitung.
+4. **Set up Nextcloud:**
+   Open `http://<server-ip>` in your browser and follow the Nextcloud installation wizard.
 
-5. **SSL-Zertifikate hinzufügen (optional):**
-   Wenn du einen Reverse Proxy wie Traefik verwendest, werden SSL-Zertifikate automatisch über Let's Encrypt konfiguriert.
+5. **Add SSL certificates (optional):**
+   If using a reverse proxy like Traefik, SSL certificates will be configured automatically through Let's Encrypt.
 
 ---
 
 ## 🔍 Script Details
-- **Benutzereingaben sammeln:** MariaDB-Zugangsdaten und Subdomain.
-- **Installationsprotokoll erstellen:** Speichert die Installationsdetails, einschließlich des MariaDB-Passworts im Klartext, zur späteren Referenz.
-- **Nextcloud installieren:** Einrichtung von Apache, MariaDB, PHP 8.1, Redis und Opcache. Herunterladen und Einrichten von Nextcloud.
-- **SSL installieren:** Optionale Installation von SSL-Zertifikaten mit Certbot.
+- **User input collection:** MariaDB credentials and subdomain.
+- **Installation log creation:** Saves installation details, including the MariaDB password in plain text, for later reference.
+- **Install Nextcloud:** Configures Apache, MariaDB, PHP 8.1, Redis, and Opcache. Downloads and sets up Nextcloud.
+- **Install SSL:** Optional installation of SSL certificates using Certbot.
 
 ---
 
 ## 📝 Notes
-- Stelle sicher, dass deine DNS-Einstellungen die Subdomain auf die IP-Adresse deines Servers zeigen.
-- Das Skript überprüft bestehende Nextcloud-Installationen und bietet SSL-Optionen nur an, wenn Nextcloud eingerichtet ist.
+- Ensure your DNS settings point the subdomain to your server's IP address.
+- The script checks for existing Nextcloud installations and offers SSL options only if Nextcloud is already set up.
 
 ---
 
 ## ❓ Troubleshooting
-- **Apache-Probleme:** Überprüfe die Protokolle unter `/var/log/apache2/`.
-- **MariaDB-Probleme:** Stelle sicher, dass die Datenbank und Benutzer korrekt erstellt sind.
-- **Netzwerkprobleme:** Überprüfe die Firewall-Regeln, wenn Verbindungsprobleme auftreten.
+- **Apache issues:** Check logs in `/var/log/apache2/`.
+- **MariaDB issues:** Ensure the database and user are correctly created.
+- **Network issues:** Check firewall rules if connectivity issues arise.
 
 ---
 
 ## 🧑‍💻 Author
 - **Kristian Gasic**
-- Bereitgestellt von **https://gasic.bio**
-- Lizenz: **Free for use**
+- Provided by **https://gasic.bio**
+- License: **Free for use**
 
 ---
 
 ## 📬 Support
-Für Fragen oder Unterstützung:
+For questions or assistance:
 **kristian@gasic.bio & Discord : Pain0xF**
 
-🎥 **Video-Tutorial:** [YouTube ansehen](https://www.youtube.com/watch?v=_KRrfq_h9rk)
+🎥 **Video Tutorial:** [Watch on YouTube](https://www.youtube.com/watch?v=_KRrfq_h9rk)
 
 [![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/kristiangasic)
-
----
